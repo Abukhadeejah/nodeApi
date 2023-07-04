@@ -3,6 +3,8 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 
+const { Fruit, fruits } = require('./Fruit');
+
 // Create a new Express application
 const app = express();
 
@@ -25,6 +27,22 @@ app.use(cors());
 app.get('/', (req, res) => {
   res.send('Hello, world!');
 });
+
+// Define and endpoint to get sorted Fruit list
+app.get('/fruits', (req, res) => {
+    const fruits = [
+      new Fruit(1, 'Apple', 'Red'),
+      new Fruit(2, 'Banana', 'Yellow'),
+      new Fruit(3, 'Grape', 'Purple'),
+      new Fruit(4, 'Orange', 'Orange'),
+      new Fruit(5, 'Strawberry', 'Red'),
+    ];
+  
+    fruits.sort((a, b) => a.color.localeCompare(b.color));
+  
+    res.json(fruits);
+  });
+
 
 // Define a route for user login
 app.post('/login', (req, res) => {
